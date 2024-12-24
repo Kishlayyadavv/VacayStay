@@ -1,0 +1,119 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card shadow-lg border-0 mb-5">
+                <img src="<%= data.image.url %>" class="card-img-top" alt="<%= data.title %>">
+                <div class="card-body">
+                    <h1 class="card-title text-center mb-4"><%= data.title %></h1>
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5 class="card-subtitle mb-2 text-muted">Description</h5>
+                            <p class="card-text"><%= data.description %></p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="card-subtitle mb-2 text-muted">Details</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Price:</strong> &#8377; <%= data.price.toLocaleString("en-IN") %> per night</li>
+                                <li><strong>Location:</strong> <%= data.country %></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="/listings/<%= data._id%>/edit" class="btn btn-outline-primary">Edit Listing</a>
+                        <form method="POST" action="/listings/<%= data._id%>?_method=DELETE" class="d-inline">
+                            <button class="btn btn-outline-danger">Delete Listing</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reviews Section -->
+            <div class="card shadow-lg border-0 mb-5">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Reviews</h2>
+
+                    <!-- Leave a Review Form -->
+                    <form action="/listings/<%= data._id %>/review" method="POST" novalidate class="needs-validation mb-5">
+                        <h5 class="mb-3">Leave a Review</h5>
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Rating:</label>
+                            <div class="rating-stars d-flex">
+                                <% for (let i=1; i <=5; i++) { %>
+                                    <input type="radio" id="star-<%= i %>" name="review[rating]" value="<%= i %>" required class="d-none">
+                                    <label for="star-<%= i %>" class="star-label me-1">
+                                        <i class="fa fa-star text-muted"></i>
+                                    </label>
+                                <% } %>
+                            </div>
+                            <div class="invalid-feedback">Please provide a rating.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">Comments:</label>
+                            <textarea name="review[comment]" id="comment" class="form-control" rows="3" required placeholder="Write your review here..."></textarea>
+                            <div class="invalid-feedback">Please submit a comment for your review.</div>
+                        </div>
+                        <button class="btn btn-primary">Submit Review</button>
+                    </form>
+
+                    <!-- Display Reviews -->
+                    <h5 class="mb-4">All Reviews</h5>
+                    <div class="reviews-container">
+                        <% if (data.reviews && data.reviews.length > 0) { %>
+                            <% for (let review of data.reviews) { %>
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <h6 class="card-subtitle text-muted">Rating:</h6>
+                                            <p class="star-rating mb-0">
+                                                <% for (let i=1; i <=5; i++) { %>
+                                                    <i class="fa fa-star <%= i <= review.rating ? 'text-warning' : 'text-muted' %>" aria-hidden="true"></i>
+                                                <% } %>
+                                            </p>
+                                        </div>
+                                        <p class="card-text"><%= review.comment %></p>
+                                    </div>
+                                    <form  class="mb-3" method="POST" action="/listings/<%= data._id %>/review/<%= review._id %>?_method=DELETE">
+                                        <button class="btn btn-sm btn-dark">Delete</button>
+                                    </form>
+                                </div>
+                            <% } %>
+                        <% } else { %>
+                            <p class="text-center text-muted">No reviews yet. Be the first to review!</p>
+                        <% } %>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .star-label:hover i,
+    .star-label:hover ~ .star-label i {
+        color: #ffc107 !important;
+    }
+    input[type="radio"]:checked + .star-label i {
+        color: #ffc107 !important;
+    }
+</style>
+
+<script>
+    // Enable Bootstrap form validation
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>

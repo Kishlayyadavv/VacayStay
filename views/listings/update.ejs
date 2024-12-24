@@ -1,0 +1,58 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+    <div class="row">
+        <div class="col-8 offset-2">
+            <h3>Update the details</h3>
+
+            <form method="POST" action="/listings/<%=data._id %>?_method=PUT" novalidate class="needs-validation">
+                <div>
+                    <label for="title" class="form-label">Title</label>
+                    <input name="listing[title]" type="text" value="<%=data.title %>" class="form-control" required/>
+                </div>
+                <br>
+                <div>
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="listing[description]" type="textarea"
+                        class="form-control" required><%=data.description %></textarea>
+                    <div class="valid-feedback">Looks good</div>
+                    <div class="invalid-feedback">This is required</div>
+                </div>
+                <br>
+                <div>
+                    <label for="image" class="form-label">Image Link</label>
+                    <input name="listing[imageUrl]" type="text" class="form-control" value="<%=data.image.url %>"/>
+                    <div class="valid-feedback">Looks good</div>
+                    <!-- <div class="invalid-feedback">This is required</div> -->
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="price" class="form-label">Price</label>
+                        <input name="listing[price]" type="text" value="<%=data.price %>" class="form-control" required />
+                        <div class="valid-feedback">Looks good</div>
+                        <div class="invalid-feedback">This is required</div>
+                    </div>
+                    <br>
+                    <div class="col-md-8">
+                        <label for="country" class="form-label">Country</label>
+                        <input name="listing[country]" type="text" value="<%=data.country %>" class="form-control" required/>
+                        <div class="valid-feedback">Looks good</div>
+                        <div class="invalid-feedback">This is required</div>
+                    </div>
+                </div>
+
+                <br>
+                <div>
+                    <label for="location" class="form-label">Location</label>
+                    <input name="listing[location]" type="textarea" class="form-control" value="<%=data.location%>" required/>
+                    <div class="valid-feedback">Looks good</div>
+                    <div class="invalid-feedback">This is required</div>
+                </div>
+                <br>
+                <button class="btn btn-dark edit-btn">Submit..</button>
+            </form>
+            <br>
+            <br>
+
+        </div>
+    </div>
