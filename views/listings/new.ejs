@@ -1,63 +1,84 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-    <div class="row">
+<div class="container mt-5">
+    <div class="booking-card shadow-lg p-4">
+        <h3 class="text-center mb-4">List Your Property</h3>
 
-        <div class="col-8 offset-2">
-            <h3>Enter the details of your property</h3>
+        <form method="POST" action="/listings" novalidate class="needs-validation">
+            <!-- Property Title -->
+            <div class="mb-3">
+                <label for="listing[title]" class="form-label">Property Name</label>
+                <input name="listing[title]" type="text" class="form-control rounded-pill" placeholder="Luxury Apartment, Beach Resort..." required/>
+            </div>
 
-            <form method="POST" action="/listings" novalidate class="needs-validation">
-                <div>
-                    <label for="listing[title]" class="form-label">Title</label>
-                    <input name="listing[title]" type="text" placeholder="Name of the apartment.." class="form-control"
-                        required />
-                    <div class="valid-feedback">Looks good</div>
-                    <div class="invalid-feedback">This is required</div>
-                </div>
-                <br>
-                <div>
-                    <label for="listing[description]" class="form-label">Description</label>
-                    <textarea name="listing[description]" type="textarea" class="form-control"
-                        placeholder="Hill top, Near beach.." required></textarea>
-                    <div class="valid-feedback">Looks good</div>
-                    <div class="invalid-feedback">This is required</div>
-                </div>
-                <br>
-                <div>
-                    <label for="listing[imageUrl]" class="form-label">Image Link</label>
-                    <input name="listing[imageUrl]" type="text" class="form-control" placeholder="https://img.url" />
-                    <div class="valid-feedback">Looks good</div>
-                    <div class="invalid-feedback">This is required</div>
-                </div>
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="listing[description]" class="form-label">Description</label>
+                <textarea name="listing[description]" class="form-control rounded-3" rows="3" placeholder="Cozy hilltop stay, Near the beach..." required></textarea>
+            </div>
 
-                <br>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="listing[price]" class="form-label">Price</label>
-                        <input name="listing[price]" type="text" placeholder="1200" class="form-control" required />
-                        <div class="valid-feedback">Looks good</div>
-                        <div class="invalid-feedback">This is required</div>
-                    </div>
-                    <br>
-                    <div class="col-md-8">
-                        <label for="listing[country]" class="form-label">Country</label>
-                        <input name="listing[country]" type="text" placeholder="India" class="form-control" required />
-                        <div class="valid-feedback">Looks good</div>
-                        <div class="invalid-feedback">This is required</div>
-                    </div>
-                </div>
+            <!-- Image URL -->
+            <div class="mb-3">
+                <label for="listing[imageUrl]" class="form-label">Image URL</label>
+                <input name="listing[imageUrl]" type="text" class="form-control rounded-pill" placeholder="https://example.com/image.jpg" />
+            </div>
 
-                <br>
-                <div>
-                    <label for="listing[location]" class="form-label">Location</label>
-                    <input name="listing[location]" type="textarea" class="form-control" placeholder="Varanasi, Uttar Pradesh" required />
-                    <div class="valid-feedback">Looks good</div>
-                    <div class="invalid-feedback">This is required</div>
+            <!-- Price & Country -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="listing[price]" class="form-label">Price per Night ($)</label>
+                    <input name="listing[price]" type="text" class="form-control rounded-pill" placeholder="1200" required />
                 </div>
-                <br>
-                <button class="btn btn-dark add-btn">Submit..</button>
-            </form>
-            <br>
-            <br>
+                <div class="col-md-6">
+                    <label for="listing[country]" class="form-label">Country</label>
+                    <input name="listing[country]" type="text" class="form-control rounded-pill" placeholder="India" required/>
+                </div>
+            </div>
 
-        </div>
+            <!-- Location -->
+            <div class="mb-3">
+                <label for="listing[location]" class="form-label">City / Location</label>
+                <input name="listing[location]" type="text" class="form-control rounded-pill" placeholder="Varanasi, Uttar Pradesh" required/>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button class="btn btn-primary w-50 rounded-pill shadow-sm">Add Property</button>
+            </div>
+        </form>
     </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(to right, #f8f9fa, #e3f2fd);
+        font-family: 'Poppins', sans-serif;
+    }
+    .booking-card {
+        background: white;
+        border-radius: 15px;
+        max-width: 600px;
+        margin: auto;
+    }
+    .form-label {
+        font-weight: 500;
+        color: #333;
+    }
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+    }
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        border: none;
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #0056b3, #004494);
+    }
+</style>

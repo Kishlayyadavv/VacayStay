@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-8 offset-lg-2">
             <div class="card shadow-lg border-0 mb-5">
-                <img src="<%= data.image.url %>" class="card-img-top" alt="<%= data.title %>">
+                <img src="<%= data.image.url %>" class="card-img-top" alt="<%= data.title %>" style="height: 400px; object-fit: cover;">
                 <div class="card-body">
                     <h1 class="card-title text-center mb-4"><%= data.title %></h1>
                     <div class="row mb-4">
@@ -20,10 +20,10 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <a href="/listings/<%= data._id%>/edit" class="btn btn-outline-primary">Edit Listing</a>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="/listings/<%= data._id%>/edit" class="btn btn-outline-primary px-4">Edit Listing</a>
                         <form method="POST" action="/listings/<%= data._id%>?_method=DELETE" class="d-inline">
-                            <button class="btn btn-outline-danger">Delete Listing</button>
+                            <button class="btn btn-outline-danger px-4">Delete Listing</button>
                         </form>
                     </div>
                 </div>
@@ -74,8 +74,8 @@
                                         </div>
                                         <p class="card-text"><%= review.comment %></p>
                                     </div>
-                                    <form  class="mb-3" method="POST" action="/listings/<%= data._id %>/review/<%= review._id %>?_method=DELETE">
-                                        <button class="btn btn-sm btn-dark">Delete</button>
+                                    <form method="POST" action="/listings/<%= data._id %>/review/<%= review._id %>?_method=DELETE">
+                                        <button class="btn btn-sm btn-danger">Delete</button>
                                     </form>
                                 </div>
                             <% } %>
@@ -84,7 +84,6 @@
                         <% } %>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -97,6 +96,22 @@
     }
     input[type="radio"]:checked + .star-label i {
         color: #ffc107 !important;
+    }
+
+    /* Styling for reviews */
+    .reviews-container .card {
+        border: 1px solid #e0e0e0;
+    }
+    .reviews-container .card-body {
+        padding: 20px;
+    }
+
+    .rating-stars .star-label i {
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+    .btn-outline-danger:hover, .btn-outline-primary:hover {
+        transform: scale(1.05);
     }
 </style>
 

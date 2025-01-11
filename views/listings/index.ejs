@@ -1,42 +1,77 @@
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Listings</title>
+    <title>Hotel Listings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/public/css/index.css"> <!-- External stylesheet -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <% layout("/layouts/boilerplate.ejs") %>
 
 <body>
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
-        <!-- here we did minimum of 3 cards are placed in a row -->
-        <% for(let listing of allListings){ %>
-            <a href="/listings/<%= listing._id%>" class="listing-link">
-                <div class="card col">
-                    <img src="<%=listing.image.url%>" class="card-img-top" alt="listing image"
-                        style="height: 20rem">
-                    <div class="card-img-overlay"></div>
-                    <div class="card-body ">
-                        <p class="card-text">
-                            <%=listing.title%>
-                        </p>
-                        &#8377; <%= Number(listing.price).toLocaleString("en-IN") %>
-                       
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Find Your Perfect Stay</h1>
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+            <% for(let listing of allListings){ %>
+                <div class="col">
+                    <div class="card listing-card shadow-lg rounded-4">
+                        <a href="/listings/<%= listing._id %>" class="text-decoration-none">
+                            <img src="<%= listing.image.url %>" class="card-img-top img-fluid rounded-top" alt="Hotel image">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark fw-semibold"><%= listing.title %></h5>
+                                <p class="card-text text-muted">
+                                    Starting at: <span class="price text-success">&#8377; <%= Number(listing.price).toLocaleString("en-IN") %></span>
+                                </p>
+                                <button class="btn btn-primary w-100 rounded-pill shadow-sm">View Details</button>
+                            </div>
+                        </a>
                     </div>
                 </div>
-            </a>
-        <% } %>
+            <% } %>
+        </div>
     </div>
 
-    <!-- <form method="GET" action="/listings/new">
-        <button >Create New Listing</button>
-    </form> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-    <!-- <% for(let listing of allListings){ %>
-        <li><a href="/listings/<%= listing._id%>"><%= listing.title %></li>
-            <br>
-    <% } %>
-    
-</ul> -->
-
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+        }
+        h1 {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        .listing-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .listing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card-title {
+            font-size: 1.25rem;
+            color: #34495e;
+        }
+        .price {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .btn-primary {
+            background: #007bff;
+            border: none;
+            font-size: 16px;
+        }
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        .card-img-top {
+            border-radius: 15px 15px 0 0;
+            object-fit: cover;
+            height: 200px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+    </style>
 </body>
-

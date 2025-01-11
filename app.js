@@ -12,7 +12,7 @@ import {Review,listingSchema} from "./schema.js"
 import review from "./models/review.js";
 
 
-const MONGO_URL = "mongodb+srv://Kishlay:Kishlay@firstproject.yjwzg.mongodb.net/";
+const MONGO_URL = process.env.MONGODB_URI || "mongodb+srv://Kishlay:Kishlay@firstproject.yjwzg.mongodb.net/";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

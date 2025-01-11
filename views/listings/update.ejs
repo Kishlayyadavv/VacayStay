@@ -1,58 +1,84 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-    <div class="row">
-        <div class="col-8 offset-2">
-            <h3>Update the details</h3>
+<div class="container mt-5">
+    <div class="booking-card shadow-lg p-4">
+        <h3 class="text-center mb-4">Update Your Hotel Listing</h3>
 
-            <form method="POST" action="/listings/<%=data._id %>?_method=PUT" novalidate class="needs-validation">
-                <div>
-                    <label for="title" class="form-label">Title</label>
-                    <input name="listing[title]" type="text" value="<%=data.title %>" class="form-control" required/>
-                </div>
-                <br>
-                <div>
-                    <label for="description" class="form-label">Description</label>
-                    <textarea name="listing[description]" type="textarea"
-                        class="form-control" required><%=data.description %></textarea>
-                    <div class="valid-feedback">Looks good</div>
-                    <div class="invalid-feedback">This is required</div>
-                </div>
-                <br>
-                <div>
-                    <label for="image" class="form-label">Image Link</label>
-                    <input name="listing[imageUrl]" type="text" class="form-control" value="<%=data.image.url %>"/>
-                    <div class="valid-feedback">Looks good</div>
-                    <!-- <div class="invalid-feedback">This is required</div> -->
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="price" class="form-label">Price</label>
-                        <input name="listing[price]" type="text" value="<%=data.price %>" class="form-control" required />
-                        <div class="valid-feedback">Looks good</div>
-                        <div class="invalid-feedback">This is required</div>
-                    </div>
-                    <br>
-                    <div class="col-md-8">
-                        <label for="country" class="form-label">Country</label>
-                        <input name="listing[country]" type="text" value="<%=data.country %>" class="form-control" required/>
-                        <div class="valid-feedback">Looks good</div>
-                        <div class="invalid-feedback">This is required</div>
-                    </div>
-                </div>
+        <form method="POST" action="/listings/<%=data._id %>?_method=PUT" novalidate class="needs-validation">
+            <!-- Hotel Name -->
+            <div class="mb-3">
+                <label for="title" class="form-label">Hotel Name</label>
+                <input name="listing[title]" type="text" value="<%=data.title %>" class="form-control rounded-pill" required/>
+            </div>
 
-                <br>
-                <div>
-                    <label for="location" class="form-label">Location</label>
-                    <input name="listing[location]" type="textarea" class="form-control" value="<%=data.location%>" required/>
-                    <div class="valid-feedback">Looks good</div>
-                    <div class="invalid-feedback">This is required</div>
-                </div>
-                <br>
-                <button class="btn btn-dark edit-btn">Submit..</button>
-            </form>
-            <br>
-            <br>
+            <!-- Description -->
+            <div class="mb-3">
+                <label for="description" class="form-label">Hotel Description</label>
+                <textarea name="listing[description]" class="form-control rounded-3" rows="3" required><%=data.description %></textarea>
+            </div>
 
-        </div>
+            <!-- Image -->
+            <div class="mb-3">
+                <label for="image" class="form-label">Image URL</label>
+                <input name="listing[imageUrl]" type="text" class="form-control rounded-pill" value="<%=data.image.url %>"/>
+            </div>
+
+            <!-- Price & Country -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="price" class="form-label">Price per Night ($)</label>
+                    <input name="listing[price]" type="text" value="<%=data.price %>" class="form-control rounded-pill" required />
+                </div>
+                <div class="col-md-6">
+                    <label for="country" class="form-label">Country</label>
+                    <input name="listing[country]" type="text" value="<%=data.country %>" class="form-control rounded-pill" required/>
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="mb-3">
+                <label for="location" class="form-label">City / Location</label>
+                <input name="listing[location]" type="text" class="form-control rounded-pill" value="<%=data.location%>" required/>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button class="btn btn-primary w-50 rounded-pill shadow-sm">Update Listing</button>
+            </div>
+        </form>
     </div>
+</div>
+
+<style>
+    body {
+        background: linear-gradient(to right, #f8f9fa, #e3f2fd);
+        font-family: 'Poppins', sans-serif;
+    }
+    .booking-card {
+        background: white;
+        border-radius: 15px;
+        max-width: 600px;
+        margin: auto;
+    }
+    .form-label {
+        font-weight: 500;
+        color: #333;
+    }
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+    }
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    .btn-primary {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        border: none;
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #0056b3, #004494);
+    }
+</style>
