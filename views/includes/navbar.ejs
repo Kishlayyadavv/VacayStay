@@ -1,16 +1,27 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sticky-top" >
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/"><i class="fa-regular fa-compass"></i></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link" aria-current="page" href="/">Home</i></a>
-          <a class="nav-link" href="/listings">All Listings</a>
-          <a class="nav-link" href="/listings/new">New Listing</a>
+<nav class="navbar navbar-expand-lg shadow-sm sticky-top bg-theme text-theme border-bottom">
+  <div class="container-fluid px-4 py-2">
+    <a class="navbar-brand fw-semibold d-flex align-items-center gap-2 text-theme" href="/">
+      <i class="fa-regular fa-compass fs-4"></i>
+      <span>StayFinder</span>
+    </a>
 
-        </div>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+      <div class="navbar-nav gap-3 ms-lg-5">
+        <a class="nav-link text-theme fw-medium px-2" href="/">Home</a>
+        <a class="nav-link text-theme fw-medium px-2" href="/listings">All Listings</a>
+        <a class="nav-link text-theme fw-medium px-2" href="/listings/new">New Listing</a>
+      </div>
+
+      <!-- Theme Toggle Button -->
+      <div class="d-flex align-items-center">
+        <button id="themeToggleNav" class="btn btn-outline-secondary rounded-circle p-2 border-0 d-flex align-items-center justify-content-center">
+          <i class="fas fa-moon"></i>
+        </button>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>

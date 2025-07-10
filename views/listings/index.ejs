@@ -1,77 +1,105 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Listings</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/css/index.css"> <!-- External stylesheet -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-</head>
-<% layout("/layouts/boilerplate.ejs") %>
+<% layout('layouts/boilerplate') %>
 
-<body>
-    <div class="container my-5">
-        <h1 class="text-center mb-4">Find Your Perfect Stay</h1>
-        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
-            <% for(let listing of allListings){ %>
+
+    <main>
+        <!-- Hero Section -->
+        <div class="container my-5">
+        <section class="hero text-center text-light py-5 position-relative">
+            <div class="container">
+                <h1 class="display-4 fw-bold">Discover Your Perfect Stay</h1>
+                <p class="lead mb-4">Curated comfort across luxury stays.</p>
+                <div class="search-bar bg-white text-dark rounded-4 shadow-lg p-4 mx-auto" style="max-width: 800px;">
+                    <form class="row g-2">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" placeholder="Location" />
+                        </div>
+                        <div class="col-md-2">
+                            <input type="date" class="form-control" />
+                        </div>
+                        <div class="col-md-2">
+                            <input type="date" class="form-control" />
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select">
+                                <option>Guests</option>
+                                <option>1 Adult</option>
+                                <option>2 Adults</option>
+                                <option>Family</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Listings Section -->
+
+        <h2 class="text-center fw-bold mb-4">All Hotels</h2>
+
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1 g-4">
+            <% for (let listing of allListings) { %>
                 <div class="col">
-                    <div class="card listing-card shadow-lg rounded-4">
-                        <a href="/listings/<%= listing._id %>" class="text-decoration-none">
-                            <img src="<%= listing.image.url %>" class="card-img-top img-fluid rounded-top" alt="Hotel image">
-                            <div class="card-body">
-                                <h5 class="card-title text-dark fw-semibold"><%= listing.title %></h5>
-                                <p class="card-text text-muted">
-                                    Starting at: <span class="price text-success">&#8377; <%= Number(listing.price).toLocaleString("en-IN") %></span>
-                                </p>
-                                <button class="btn btn-primary w-100 rounded-pill shadow-sm">View Details</button>
-                            </div>
+                    <div class="card listing-card shadow-lg rounded-4 h-100">
+                        <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+                            <% if (listing.image && listing.image.url) { %>
+                                <img src="<%= listing.image.url %>" class="card-img-top img-fluid" alt="Hotel image" />
+                                <% } else { %>
+                                    <img src="/images/default.jpg" class="card-img-top img-fluid"
+                                        alt="Default hotel image" />
+                                    <% } %>
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <%= listing.title %>
+                                            </h5>
+                                            <div class="rating mb-2">
+                                                <% for(let i=1; i<=5; i++){ %>
+                                                    <% if(i <=4){ %>
+                                                        <i class="fas fa-star text-warning"></i>
+                                                        <% } else { %>
+                                                            <i class="far fa-star text-warning"></i>
+                                                            <% } %>
+                                                                <% } %>
+                                            </div>
+                                            <p class="card-text">
+                                                Starting at: <span class="price text-success">&#8377;<%=
+                                                        Number(listing.price).toLocaleString("en-IN") %></span>
+                                            </p>
+                                            <button class="btn btn-primary w-100 rounded-pill">View Details</button>
+                                        </div>
                         </a>
                     </div>
                 </div>
-            <% } %>
+                <% } %>
         </div>
-    </div>
+        </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <!-- Theme Toggle -->
+        <div class="position-fixed bottom-0 end-0 m-4">
+            <button id="themeToggle" class="btn btn-light shadow border">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </main>
 
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #f8f9fa;
-        }
-        h1 {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        .listing-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .listing-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-        .card-title {
-            font-size: 1.25rem;
-            color: #34495e;
-        }
-        .price {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        .btn-primary {
-            background: #007bff;
-            border: none;
-            font-size: 16px;
-        }
-        .btn-primary:hover {
-            background: #0056b3;
-        }
-        .card-img-top {
-            border-radius: 15px 15px 0 0;
-            object-fit: cover;
-            height: 200px;
-        }
-        .card-body {
-            padding: 20px;
-        }
-    </style>
-</body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggle = document.getElementById("themeToggle");
+            const currentTheme = localStorage.getItem("theme");
+
+            if (currentTheme === "dark") {
+                document.documentElement.setAttribute("data-theme", "dark");
+                toggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+
+            toggle.onclick = () => {
+                const current = document.documentElement.getAttribute("data-theme");
+                const newTheme = current === "dark" ? "light" : "dark";
+                document.documentElement.setAttribute("data-theme", newTheme);
+                localStorage.setItem("theme", newTheme);
+                toggle.innerHTML = newTheme === "dark" ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            };
+        });
+    </script>

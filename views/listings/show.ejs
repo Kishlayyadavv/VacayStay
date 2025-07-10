@@ -1,134 +1,170 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-lg-8 offset-lg-2">
-            <div class="card shadow-lg border-0 mb-5">
-                <img src="<%= data.image.url %>" class="card-img-top" alt="<%= data.title %>" style="height: 400px; object-fit: cover;">
-                <div class="card-body">
-                    <h1 class="card-title text-center mb-4"><%= data.title %></h1>
-                    <div class="row mb-4">
-                        <div class="col-md-6">
-                            <h5 class="card-subtitle mb-2 text-muted">Description</h5>
-                            <p class="card-text"><%= data.description %></p>
-                        </div>
-                        <div class="col-md-6">
-                            <h5 class="card-subtitle mb-2 text-muted">Details</h5>
-                            <ul class="list-unstyled">
-                                <li><strong>Price:</strong> &#8377; <%= data.price.toLocaleString("en-IN") %> per night</li>
-                                <li><strong>Location:</strong> <%= data.country %></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between mt-4">
-                        <a href="/listings/<%= data._id%>/edit" class="btn btn-outline-primary px-4">Edit Listing</a>
-                        <form method="POST" action="/listings/<%= data._id%>?_method=DELETE" class="d-inline">
-                            <button class="btn btn-outline-danger px-4">Delete Listing</button>
-                        </form>
-                    </div>
-                </div>
+<div class="container py-5">
+  <div class="row">
+    <div class="col-lg-10 offset-lg-1">
+
+      <!-- Hotel Card -->
+      <div class="card shadow-lg border-0 rounded-4 mb-5 bg-theme text-theme">
+        <img src="<%= data.image.url %>" class="card-img-top rounded-top" alt="<%= data.title %>" style="height: 400px; object-fit: cover;" />
+
+        <div class="card-body p-4">
+          <h1 class="card-title text-center mb-4 fw-bold fs-2"><%= data.title %></h1>
+
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <h5 class="text-muted">📝 Description</h5>
+              <p><%= data.description %></p>
             </div>
-
-            <!-- Reviews Section -->
-            <div class="card shadow-lg border-0 mb-5">
-                <div class="card-body">
-                    <h2 class="card-title text-center mb-4">Reviews</h2>
-
-                    <!-- Leave a Review Form -->
-                    <form action="/listings/<%= data._id %>/review" method="POST" novalidate class="needs-validation mb-5">
-                        <h5 class="mb-3">Leave a Review</h5>
-                        <div class="mb-3">
-                            <label for="rating" class="form-label">Rating:</label>
-                            <div class="rating-stars d-flex">
-                                <% for (let i=1; i <=5; i++) { %>
-                                    <input type="radio" id="star-<%= i %>" name="review[rating]" value="<%= i %>" required class="d-none">
-                                    <label for="star-<%= i %>" class="star-label me-1">
-                                        <i class="fa fa-star text-muted"></i>
-                                    </label>
-                                <% } %>
-                            </div>
-                            <div class="invalid-feedback">Please provide a rating.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="comment" class="form-label">Comments:</label>
-                            <textarea name="review[comment]" id="comment" class="form-control" rows="3" required placeholder="Write your review here..."></textarea>
-                            <div class="invalid-feedback">Please submit a comment for your review.</div>
-                        </div>
-                        <button class="btn btn-primary">Submit Review</button>
-                    </form>
-
-                    <!-- Display Reviews -->
-                    <h5 class="mb-4">All Reviews</h5>
-                    <div class="reviews-container">
-                        <% if (data.reviews && data.reviews.length > 0) { %>
-                            <% for (let review of data.reviews) { %>
-                                <div class="card mb-3">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <h6 class="card-subtitle text-muted">Rating:</h6>
-                                            <p class="star-rating mb-0">
-                                                <% for (let i=1; i <=5; i++) { %>
-                                                    <i class="fa fa-star <%= i <= review.rating ? 'text-warning' : 'text-muted' %>" aria-hidden="true"></i>
-                                                <% } %>
-                                            </p>
-                                        </div>
-                                        <p class="card-text"><%= review.comment %></p>
-                                    </div>
-                                    <form method="POST" action="/listings/<%= data._id %>/review/<%= review._id %>?_method=DELETE">
-                                        <button class="btn btn-sm btn-danger">Delete</button>
-                                    </form>
-                                </div>
-                            <% } %>
-                        <% } else { %>
-                            <p class="text-center text-muted">No reviews yet. Be the first to review!</p>
-                        <% } %>
-                    </div>
-                </div>
+            <div class="col-md-6">
+              <h5 class="text-muted">📍 Details</h5>
+              <ul class="list-unstyled">
+                <li><strong>Price:</strong> ₹ <%= data.price.toLocaleString("en-IN") %> / night</li>
+                <li><strong>Location:</strong> <%= data.location %>, <%= data.country %></li>
+              </ul>
             </div>
+          </div>
+
+          <div class="d-flex justify-content-between mt-4">
+            <a href="/listings/<%= data._id %>/edit" class="btn btn-outline-primary px-4 rounded-pill">Edit Listing</a>
+            <form method="POST" action="/listings/<%= data._id %>?_method=DELETE" class="d-inline">
+              <button class="btn btn-outline-danger px-4 rounded-pill">Delete Listing</button>
+            </form>
+          </div>
         </div>
+      </div>
+
+      <!-- Reviews Section -->
+      <div class="card shadow-lg border-0 rounded-4 mb-5 bg-theme text-theme">
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4 fw-semibold">⭐ Guest Reviews</h2>
+
+          <!-- Leave a Review Form -->
+          <form action="/listings/<%= data._id %>/review" method="POST" class="needs-validation mb-5" novalidate>
+            <h5 class="mb-3">Leave a Review</h5>
+
+            <div class="mb-3">
+              <label class="form-label">Rating:</label>
+              <div class="rating-stars d-flex gap-2">
+                <% for (let i = 1; i <= 5; i++) { %>
+                  <input type="radio" id="star-<%= i %>" name="review[rating]" value="<%= i %>" required class="d-none" />
+                  <label for="star-<%= i %>" class="star-label">
+                    <i class="fa fa-star text-muted fs-4"></i>
+                  </label>
+                <% } %>
+              </div>
+              <div class="invalid-feedback">Please select a rating.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="comment" class="form-label">Comment:</label>
+              <textarea name="review[comment]" id="comment" rows="3" class="form-control rounded-3" placeholder="Write your thoughts..." required></textarea>
+              <div class="invalid-feedback">Please write a comment.</div>
+            </div>
+
+            <button class="btn btn-primary rounded-pill px-4">Submit Review</button>
+          </form>
+
+          <!-- Display Reviews -->
+          <h5 class="mb-3">All Reviews</h5>
+          <div class="reviews-container">
+            <% if (data.reviews?.length > 0) { %>
+              <% data.reviews.forEach(review => { %>
+                <div class="card mb-3 border-0 bg-light-subtle bg-theme-sub rounded-3">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                      <div>
+                        <strong>Rating:</strong>
+                        <% for (let i = 1; i <= 5; i++) { %>
+                          <i class="fa fa-star <%= i <= review.rating ? 'text-warning' : 'text-muted' %>"></i>
+                        <% } %>
+                      </div>
+                      <form method="POST" action="/listings/<%= data._id %>/review/<%= review._id %>?_method=DELETE">
+                        <button class="btn btn-sm btn-danger rounded-pill">Delete</button>
+                      </form>
+                    </div>
+                    <p class="mb-0"><%= review.comment %></p>
+                  </div>
+                </div>
+              <% }); %>
+            <% } else { %>
+              <p class="text-center text-muted">No reviews yet. Be the first to review!</p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div>
 </div>
 
+<!-- Custom CSS -->
 <style>
-    .star-label:hover i,
-    .star-label:hover ~ .star-label i {
-        color: #ffc107 !important;
-    }
-    input[type="radio"]:checked + .star-label i {
-        color: #ffc107 !important;
-    }
+  :root {
+    --form-bg: #ffffff;
+    --text: #2c3e50;
+    --sub-bg: #f8f9fa;
+  }
 
-    /* Styling for reviews */
-    .reviews-container .card {
-        border: 1px solid #e0e0e0;
-    }
-    .reviews-container .card-body {
-        padding: 20px;
-    }
+  [data-theme='dark'] {
+    --form-bg: #1e1e1e;
+    --text: #f1f1f1;
+    --sub-bg: #2a2a2a;
+  }
 
-    .rating-stars .star-label i {
-        font-size: 1.5rem;
-        cursor: pointer;
-    }
-    .btn-outline-danger:hover, .btn-outline-primary:hover {
-        transform: scale(1.05);
-    }
+  .bg-theme {
+    background-color: var(--form-bg);
+    color: var(--text);
+  }
+
+  .bg-theme-sub {
+    background-color: var(--sub-bg);
+  }
+
+  .star-label:hover i,
+  .star-label:hover ~ .star-label i {
+    color: #ffc107 !important;
+  }
+
+  input[type="radio"]:checked + .star-label i {
+    color: #ffc107 !important;
+  }
+
+  .rating-stars .star-label i {
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .btn-outline-danger:hover,
+  .btn-outline-primary:hover,
+  .btn-primary:hover {
+    transform: scale(1.05);
+  }
+
+  .btn,
+  .form-control {
+    transition: all 0.3s ease;
+  }
+
+  .form-control:focus {
+    box-shadow: 0 0 5px var(--text);
+    border-color: var(--text);
+  }
 </style>
 
+<!-- Validation Script -->
 <script>
-    // Enable Bootstrap form validation
-    (function () {
-        'use strict'
-        var forms = document.querySelectorAll('.needs-validation')
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
+  (() => {
+    'use strict';
+    const forms = document.querySelectorAll('.needs-validation');
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      });
+    });
+  })();
 </script>

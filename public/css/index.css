@@ -1,62 +1,144 @@
+:root {
+  --bg: #ffffff;
+  --text: #2c3e50;
+  --card-bg: #ffffff;
+  --btn-bg: #007bff;
+  --btn-hover: #0056b3;
+}
+
+[data-theme='dark'] {
+  --bg: #121212;
+  --text: #f1f1f1;
+  --card-bg: #1e1e1e;
+  --btn-bg: #ffb300;
+  --btn-hover: #cc8400;
+}
+
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-h1 {
-    font-weight: bold;
-    color: #333;
+h1, h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--text);
 }
 
-/* Set a fixed height for all cards */
-.listing-card {
-    border-radius: 10px;
-    overflow: hidden;
-    height: 400px; /* Fixed height for uniformity */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
+.hero {
+  background: url('/public/images/hero.jpg') center/cover no-repeat;
+  min-height: 500px;
+}
+
+.search-bar input,
+.search-bar select {
+  border-radius: 8px;
+}
+
+.card {
+  background-color: var(--card-bg);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .listing-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Ensuring the image is properly contained */
 .card-img-top {
-    height: 220px; /* Fixed image height */
-    object-fit: cover;
+  border-radius: 20px 20px 0 0;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
 }
 
-/* Ensuring the content area has consistent spacing */
-.card-body {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    /* height:100rem; */
+.listing-card:hover .card-img-top {
+  transform: scale(1.05);
 }
 
-/* Text styles */
 .card-title {
-    font-weight: 600;
-    color: #343a40;
+  font-weight: 600;
+  color: var(--text);
 }
 
 .price {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #dc3545;
+  font-size: 1.3rem;
+  font-weight: bold;
 }
 
-/* Button styles */
 .btn-primary {
-    background-color: #007bff;
-    border: none;
-    transition: background-color 0.3s;
+  background-color: var(--btn-bg);
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+  background-color: var(--btn-hover);
+  transform: scale(1.03);
+}
+
+.rating i {
+  font-size: 1rem;
+}
+
+:root {
+  --nav-bg: #ffffff;
+  --nav-text: #2c3e50;
+  --nav-hover: #007bff;
+  --nav-border: #dee2e6;
+}
+
+[data-theme='dark'] {
+  --nav-bg: #1a1a1a;
+  --nav-text: #f8f9fa;
+  --nav-hover: #ffb300;
+  --nav-border: #333;
+}
+
+.bg-theme {
+  background-color: var(--nav-bg) !important;
+}
+
+.text-theme {
+  color: var(--nav-text) !important;
+}
+
+.navbar {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar .nav-link {
+  color: var(--nav-text);
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: var(--nav-hover);
+}
+
+.navbar .nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background-color: var(--nav-hover);
+  left: 0;
+  bottom: 0;
+  transition: width 0.3s ease;
+}
+
+.navbar .nav-link:hover::after {
+  width: 100%;
+}
+
+#themeToggleNav {
+  color: var(--nav-text);
+  background-color: transparent;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+#themeToggleNav:hover {
+  color: var(--nav-hover);
 }
